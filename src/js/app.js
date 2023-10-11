@@ -1,9 +1,12 @@
+let basket = JSON.parse(localStorage.getItem("basket"));
+let cartNum = document.querySelector(".cartNumber");
+
 if (localStorage.getItem("basket") === null) {
   localStorage.setItem("basket", JSON.stringify([]));
 }
 
 document.querySelector(".cart-icon").addEventListener("click", function () {
-  location.replace("http://127.0.0.1:5500/cart.html");
+  location.assign("http://127.0.0.1:5500/cart.html");
 });
 
 fetch("db.json")
@@ -59,7 +62,6 @@ fetch("db.json")
         if (localStorage.getItem("basket") === null) {
           localStorage.setItem("basket", JSON.stringify([]));
         }
-        let basket = JSON.parse(localStorage.getItem("basket"));
         let data_id = e.target.getAttribute("data-id");
         let price_id = e.target.getAttribute("data-price");
         let exist = basket.find((p) => p.id == data_id);
@@ -76,12 +78,12 @@ fetch("db.json")
 
         let price = 0;
         basket.forEach((item) => {
-          price += item.price * count;
+          price += item.price * item.count;
         });
-        prodPrice.innerText = price.toFixed(2);
-        prodCount.innerText = basket.length;
 
         localStorage.setItem("basket", JSON.stringify(basket));
+
+        cartNum.innerText = basket.length;
       });
     });
   });
